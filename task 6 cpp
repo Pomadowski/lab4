@@ -1,0 +1,70 @@
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include <stdio.h>
+#include "LIDAR.h"
+
+
+LIDAR::LIDAR(){
+for(int i=0; i<90; i++){
+				angles[i]=i;
+				collisionWarning[i]=false;
+			}
+			sensorID = rand()%10000;
+			maxRange=100;
+			minRange=10;
+			std::cout << "Initializing LIADR... \n" << std::endl;	
+	
+}
+void LIDAR::writeDistance(int distance, int angle){
+		if(distance > maxRange){
+				distance = maxRange;
+			}
+			measurements[angle]=distance;
+			if(distance < minRange){
+				collisionWarning[angle] = true;
+			}
+			else{
+				collisionWarning[angle] = false;
+			}
+	
+}
+void LIDAR::warningSweep(){
+	for(int i=0; i<90; i++){
+				if(collisionWarning[i]==true){
+						std::cout << "WARNING angle:"  << i << "  distance: "<< measurements[i] << "\n" << std::endl;
+				}
+				else{
+						std::cout << " angle:"  << i << "  clear \n" << std::endl;
+				}
+				
+			}
+			
+			
+	
+	
+}
+void LIDAR::setMinRange(int range){
+			minRange = range;
+		}
+		
+void LIDAR::setMaxRange(int range){
+			maxRange = range;
+		}
+int LIDAR::getDistance(int angle){
+			return measurements[angle];
+		}	
+int LIDAR::getClosest(){
+			double closest;
+			int closestAngle;
+			closest = maxRange;
+			for(int i=0; i<90; i++){
+				if(measurements[i]<closest){
+					closest = measurements[i];
+					closestAngle=i;
+				}
+				
+				
+			}
+			return closestAngle;
+		}
