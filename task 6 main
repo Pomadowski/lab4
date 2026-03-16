@@ -1,0 +1,26 @@
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include <stdio.h>
+#include "LIDAR.cpp"
+
+int main(){
+	
+	LIDAR L1;
+	L1.setMinRange(10);
+	for(int i=0; i<90; i++){
+		int distance = rand() % 100 ;
+		L1.writeDistance(distance, i);
+	
+	}
+	L1.warningSweep();
+	int closestAngle = L1.getClosest();
+	double closestDistance = L1.getDistance(closestAngle);
+	std::cout << "Closest track at angle: "  << closestAngle << "  distance: "<< closestDistance << "\n" << std::endl;
+	
+	
+	
+	
+	
+	return 0;
+}
