@@ -1,0 +1,104 @@
+
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include <stdio.h>
+
+
+
+class LIDAR {
+	private:
+		int angles[90];
+		int sensorID;
+		int maxRange;
+		int minRange;
+		int measurements[90];
+		bool collisionWarning[90];
+	public:
+		LIDAR(){
+			for(int i=0; i<90; i++){
+				angles[i]=i;
+				collisionWarning[i]=false;
+			}
+			sensorID = rand()%10000;
+			maxRange=100;
+			minRange=10;
+			std::cout << "Initializing LIADR... \n" << std::endl;
+		}
+		void writeDistance(int distance, int angle){
+			if(distance > maxRange){
+				distance = maxRange;
+			}
+			measurements[angle]=distance;
+			if(distance < minRange){
+				collisionWarning[angle] = true;
+			}
+			else{
+				collisionWarning[angle] = false;
+			}
+		}
+		void warningSweep(){
+			for(int i=0; i<90; i++){
+				if(collisionWarning[i]==true){
+						std::cout << "WARNING angle:"  << i << "  distance: "<< measurements[i] << "\n" << std::endl;
+				}
+				else{
+						std::cout << " angle:"  << i << "  clear \n" << std::endl;
+				}
+				
+			}
+			
+			
+		}
+		double getDistance(int angle){
+			return measurements[angle];
+		}		
+		int getClosest(){
+			double closest;
+			int closestAngle;
+			closest = maxRange;
+			for(int i=0; i<90; i++){
+				if(measurements[i]<closest){
+					closest = measurements[i];
+					closestAngle=i;
+				}
+				
+				
+			}
+			return closestAngle;
+		}
+		void setMaxRange(int range){
+			maxRange = range;
+		}
+		void setMinRange(int range){
+			minRange = range;
+		}
+	
+	
+	
+};
+
+
+
+
+
+int main(){
+	
+	LIDAR L1;
+	L1.setMinRange(10);
+	for(int i=0; i<90; i++){
+		int distance = rand() % 100 ;
+		L1.writeDistance(distance, i);
+	
+	}
+	L1.warningSweep();
+	int closestAngle = L1.getClosest();
+	double closestDistance = L1.getDistance(closestAngle);
+	std::cout << "Closest track at angle: "  << closestAngle << "  distance: "<< closestDistance << "\n" << std::endl;
+	
+	
+	
+	
+	
+	return 0;
+}
