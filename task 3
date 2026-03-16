@@ -10,6 +10,10 @@ class humiditySensor {
 		double reading[2][1];
 		int sensorID;
 	public:
+		humiditySensor(){
+			std::cout << "sensor initialized" << std::endl;
+			sensorID = rand() % 100000;
+		}
 		void storeReading(double humidity, double unix){
 			if(humidity>100){
 				std::cout << "\n error: humidity > 100%. Reading dropped \n" << std::endl;
@@ -95,3 +99,4 @@ int main(){
 	
 	
 }
+	
