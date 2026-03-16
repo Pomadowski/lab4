@@ -32,7 +32,12 @@ class humiditySensor {
 			}
 			
 		}
-		
+		void setID(int ID){
+			sensorID=ID;
+		}
+		int getID(){
+			return sensorID;
+		}
 		
 	
 	
@@ -71,6 +76,10 @@ int main(){
 	printf("\n complete \n");
 	return 0;
 	
+	
+	
+	
+}
 	
 	
 	
